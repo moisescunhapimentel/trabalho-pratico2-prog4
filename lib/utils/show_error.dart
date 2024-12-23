@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trabalho2/utils/response.dart';
+import 'package:trabalho2/utils/custom_response.dart';
 
 void showErrorSnackBarIfHasError(
     BuildContext context, CustomResponse response) {
