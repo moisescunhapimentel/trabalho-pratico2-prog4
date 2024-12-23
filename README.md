@@ -1,4 +1,4 @@
-# trabalho1
+# trabalho2
 
 Projeto para o segundo trabalho individual da disciplina de Programação na UESPI (PIRIPIRI).
 
