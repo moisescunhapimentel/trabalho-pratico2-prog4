@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trabalho2/models/dog.dart';
 import 'package:trabalho2/services/dog_service.dart';
-import 'package:trabalho2/utils/response.dart';
+import 'package:trabalho2/utils/custom_response.dart';
 
 class DogProvider with ChangeNotifier {
   final List<Dog> _dogs = [];
@@ -16,6 +16,7 @@ class DogProvider with ChangeNotifier {
 
   void selectDog({required int index}) {
     _currentDog = _dogs[index];
+    notifyListeners();
   }
 
   Future<CustomResponse<bool>> loadMoreDogsIfEmpty() async {
