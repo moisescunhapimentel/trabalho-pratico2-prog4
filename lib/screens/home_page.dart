@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trabalho2/providers/dog_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:trabalho2/screens/dog_view_screen.dart';
+import 'package:trabalho2/utils/custom_response.dart';
 import 'package:trabalho2/widgets/image_network_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,13 +15,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<DogProvider>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text('CuteDogs'),
       ),
       body: FutureBuilder(
-        future: context.read<DogProvider>().loadMoreDogsIfEmpty(),
+        future: provider.loadMoreDogsIfEmpty().timeout(
+              const Duration(seconds: 30),
+              onTimeout: () => CustomResponse(
+                  value: false,
+                  error:
+                      'Não foi possível carregar as imagens. Tempo limite atingido.'),
+            ),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -28,6 +37,8 @@ class _HomePageState extends State<HomePage> {
             );
           } else if (snapshot.hasData) {
             if (snapshot.data!.hasError) {
+              debugPrint(
+                  'entrando aqui ${snapshot.data!} ${snapshot.data!.error}');
               return Center(
                 child: Text(snapshot.data!.error!),
               );
